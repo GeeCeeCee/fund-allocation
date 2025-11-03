@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import FundManager from "../utility/allocation";
+import FundManager from "../services/allocation";
 
 const AllocationHandler = {
   allocate: async function (req: Request, res: Response) {
@@ -15,7 +15,6 @@ const AllocationHandler = {
       res.status(500).send("Internal Server Error");
       return;
     }
-    res.send("This is an example route.");
   },
 };
 

@@ -24,14 +24,22 @@ const FundManager = () => {
         fundLedger[PlanTypes.ONE_TIME] == null
       ) {
         fundLedger[PlanTypes.ONE_TIME] = 1;
-        addToPortfolio(depositPlanMap[PlanTypes.ONE_TIME], deposit);
+        addToPortfolio(
+          depositPlanMap[PlanTypes.ONE_TIME],
+          deposit,
+          depositWeights[PlanTypes.ONE_TIME]
+        );
         return;
       }
 
       fundLedger[PlanTypes.MONTHLY] == null
         ? (fundLedger[PlanTypes.MONTHLY] = 1)
         : fundLedger[PlanTypes.MONTHLY]++;
-      addToPortfolio(depositPlanMap[PlanTypes.MONTHLY], deposit);
+      addToPortfolio(
+        depositPlanMap[PlanTypes.MONTHLY],
+        deposit,
+        depositWeights[PlanTypes.MONTHLY]
+      );
     });
 
     console.info("Fund Allocations");
@@ -43,27 +51,18 @@ const FundManager = () => {
     return { fundAllocation, fundLedger };
   };
 
-  const addToPortfolio = (allocations: Allocation[], fund: number) => {
+  const addToPortfolio = (
+    allocations: Allocation[],
+    fund: number,
+    weightage: number
+  ) => {
     if (fund <= 0 && allocations == null && Array.isArray(allocations)) return;
     let index = 0;
-    while (fund > 0 && allocations.length > 0 && index < allocations.length) {
-      const currentAllocation = allocations[index];
-      fundAllocation[currentAllocation.portfolioName] == null
-        ? (fundAllocation[currentAllocation.portfolioName] = Math.min(
-            currentAllocation.amount,
-            fund
-          ))
-        : (fundAllocation[currentAllocation.portfolioName] += Math.min(
-            currentAllocation.amount,
-            fund
-          ));
-
-      fund -= currentAllocation.amount;
-      index++;
-
-      if (fund > 0 && index === allocations.length) {
-        index = 0;
-      }
+    for (const allocation of allocations) {
+      const proportionateFund = (allocation.amount / weightage) * fund;
+      fundAllocation[allocation.portfolioName] == null
+        ? (fundAllocation[allocation.portfolioName] = proportionateFund)
+        : (fundAllocation[allocation.portfolioName] += proportionateFund);
     }
   };
 
@@ -73,27 +72,3 @@ const FundManager = () => {
 };
 
 export default FundManager;
-// default module.exports = FundManager;
-
-// const depositPlans: DepositPlan[] = [
-//   {
-//     type: PlanTypes.ONE_TIME,
-//     allocations: [
-//       { portfolioName: "HIGH_RISK", amount: 700 },
-//       { portfolioName: "RETIREMENT", amount: 300 },
-//     ],
-//   },
-//   {
-//     type: PlanTypes.MONTHLY,
-//     allocations: [
-//       { portfolioName: "HIGH_RISK", amount: 400 },
-//       { portfolioName: "RETIREMENT", amount: 600 },
-//     ],
-//   },
-// ];
-
-// const deposits = [1000, 2000, 4000, 5000, 10];
-// const fundManager = FundManager();
-// const res = fundManager.allocateFunds(depositPlans, deposits);
-
-// console.log(res);
