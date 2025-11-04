@@ -1,6 +1,6 @@
 # Fund Allocation Service
 
-A TypeScript Express API for managing investment fund allocations across different portfolios with support for one-time and monthly deposit plans.
+A TypeScript Express app for managing investment fund allocations across different portfolios with support for one-time and monthly deposit plans.
 
 ## Features
 
