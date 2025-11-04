@@ -24,7 +24,7 @@ export const schema = {
                 portfolioName: { type: "string", minLength: 1 },
                 amount: {
                   type: "number",
-                  minimum: 0,
+                  minimum: 1,
                 },
               },
               additionalProperties: false,
