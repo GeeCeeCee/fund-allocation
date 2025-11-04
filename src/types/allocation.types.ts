@@ -11,10 +11,8 @@ export interface Portfolio {
   balance: number;
 }
 
-export type PortfoliosType = "HIGH_RISK" | "RETIREMENT";
-
 export interface Allocation {
-  portfolioName: PortfoliosType;
+  portfolioName: string;
   amount: number;
 }
 

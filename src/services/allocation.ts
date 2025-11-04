@@ -1,21 +1,31 @@
-import { Allocation, DepositPlan, PlanTypes } from "../types/allocation.types";
+import {
+  Allocation,
+  DepositPlan,
+  PlanType,
+  PlanTypes,
+} from "../types/allocation.types";
 
 const FundManager = () => {
   const fundAllocation: { [key: string]: number } = {};
   const depositPlanMap: { [key: string]: Allocation[] } = {};
   const fundLedger: { [key: string]: number } = {};
-  const allocateFunds = (depositPlan: DepositPlan[], deposits: number[]) => {
-    const depositWeights: { [key: string]: number } = {};
+  const depositWeights: { [key: string]: number } = {};
 
+  const allocateFunds = (depositPlan: DepositPlan[], deposits: number[]) => {
+    let fundConsumptionIndex = 0;
     depositPlan.forEach((plan) => {
-      depositPlanMap[plan.type] = [...plan.allocations].sort(
-        (a, b) => a.amount - b.amount
-      );
-      depositWeights[plan.type] = plan.allocations.reduce(
+      depositPlanMap[plan.type] = [...plan.allocations];
+      const weightage = plan.allocations.reduce(
         (acc, curr) => acc + curr.amount,
         0
       );
+      depositWeights[plan.type] = weightage;
+      fundConsumptionIndex += weightage;
     });
+
+    if (fundConsumptionIndex <= 0) {
+      return { fundAllocation, fundLedger };
+    }
 
     deposits.forEach((deposit) => {
       if (
@@ -23,23 +33,11 @@ const FundManager = () => {
         depositWeights[PlanTypes.ONE_TIME] === deposit &&
         fundLedger[PlanTypes.ONE_TIME] == null
       ) {
-        fundLedger[PlanTypes.ONE_TIME] = 1;
-        addToPortfolio(
-          depositPlanMap[PlanTypes.ONE_TIME],
-          deposit,
-          depositWeights[PlanTypes.ONE_TIME]
-        );
+        addToPortfolio(PlanTypes.ONE_TIME, deposit);
         return;
       }
 
-      fundLedger[PlanTypes.MONTHLY] == null
-        ? (fundLedger[PlanTypes.MONTHLY] = 1)
-        : fundLedger[PlanTypes.MONTHLY]++;
-      addToPortfolio(
-        depositPlanMap[PlanTypes.MONTHLY],
-        deposit,
-        depositWeights[PlanTypes.MONTHLY]
-      );
+      addToPortfolio(PlanTypes.MONTHLY, deposit);
     });
 
     console.info("Fund Allocations");
@@ -51,18 +49,36 @@ const FundManager = () => {
     return { fundAllocation, fundLedger };
   };
 
-  const addToPortfolio = (
-    allocations: Allocation[],
-    fund: number,
-    weightage: number
-  ) => {
-    if (fund <= 0 && allocations == null && Array.isArray(allocations)) return;
-    let index = 0;
-    for (const allocation of allocations) {
-      const proportionateFund = (allocation.amount / weightage) * fund;
-      fundAllocation[allocation.portfolioName] == null
-        ? (fundAllocation[allocation.portfolioName] = proportionateFund)
-        : (fundAllocation[allocation.portfolioName] += proportionateFund);
+  const addToPortfolio = (planType: PlanType, fund: number) => {
+    const allocationDetails = {
+      planType,
+      fund,
+    };
+    while (allocationDetails.fund > 0) {
+      if (depositPlanMap[allocationDetails.planType] != null) {
+        const weightage = depositWeights[allocationDetails.planType];
+        const allocationAmount = Math.min(weightage, fund);
+        allocationDetails.fund -= weightage;
+        const planDetails = depositPlanMap[allocationDetails.planType];
+        planDetails.forEach((allocation: Allocation) => {
+          const proportionateFund =
+            Math.round(
+              (allocation.amount / weightage) * allocationAmount * 100
+            ) / 100;
+          fundAllocation[allocation.portfolioName] == null
+            ? (fundAllocation[allocation.portfolioName] = proportionateFund)
+            : (fundAllocation[allocation.portfolioName] += proportionateFund);
+        });
+
+        fundLedger[allocationDetails.planType] == null
+          ? (fundLedger[allocationDetails.planType] = 1)
+          : fundLedger[allocationDetails.planType]++;
+      }
+
+      allocationDetails.planType =
+        allocationDetails.planType === PlanTypes.MONTHLY
+          ? PlanTypes.ONE_TIME
+          : PlanTypes.MONTHLY;
     }
   };
 
