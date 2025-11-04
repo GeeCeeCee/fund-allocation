@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1762253613967" clover="3.2.0">
+  <project timestamp="1762253613967" name="All files">
+    <metrics statements="42" coveredstatements="42" conditionals="12" coveredconditionals="12" methods="7" coveredmethods="7" elements="61" coveredelements="61" complexity="0" loc="42" ncloc="42" packages="2" files="2" classes="2"/>
+    <package name="services">
+      <metrics statements="41" coveredstatements="41" conditionals="12" coveredconditionals="12" methods="7" coveredmethods="7"/>
+      <file name="allocation.ts" path="/Users/gourabchattopadhyay/Code/learnings/stashaway/src/services/allocation.ts">
+        <metrics statements="41" coveredstatements="41" conditionals="12" coveredconditionals="12" methods="7" coveredmethods="7"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="9" count="13" type="stmt"/>
+        <line num="10" count="13" type="stmt"/>
+        <line num="11" count="13" type="stmt"/>
+        <line num="12" count="13" type="stmt"/>
+        <line num="14" count="13" type="stmt"/>
+        <line num="15" count="13" type="stmt"/>
+        <line num="16" count="13" type="stmt"/>
+        <line num="17" count="18" type="stmt"/>
+        <line num="18" count="18" type="stmt"/>
+        <line num="19" count="29" type="stmt"/>
+        <line num="22" count="18" type="stmt"/>
+        <line num="23" count="18" type="stmt"/>
+        <line num="26" count="13" type="cond" truecount="1" falsecount="0"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="30" count="10" type="stmt"/>
+        <line num="31" count="12" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="40" count="9" type="stmt"/>
+        <line num="43" count="10" type="stmt"/>
+        <line num="44" count="10" type="stmt"/>
+        <line num="46" count="10" type="stmt"/>
+        <line num="47" count="10" type="stmt"/>
+        <line num="49" count="10" type="stmt"/>
+        <line num="52" count="13" type="stmt"/>
+        <line num="53" count="12" type="stmt"/>
+        <line num="57" count="12" type="stmt"/>
+        <line num="58" count="1018" type="cond" truecount="1" falsecount="0"/>
+        <line num="59" count="519" type="stmt"/>
+        <line num="60" count="519" type="stmt"/>
+        <line num="61" count="519" type="stmt"/>
+        <line num="62" count="519" type="stmt"/>
+        <line num="63" count="519" type="stmt"/>
+        <line num="65" count="1030" type="stmt"/>
+        <line num="68" count="1030" type="cond" truecount="2" falsecount="0"/>
+        <line num="73" count="519" type="cond" truecount="2" falsecount="0"/>
+        <line num="78" count="1018" type="stmt"/>
+        <line num="85" count="13" type="stmt"/>
+        <line num="90" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="types">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="allocation.types.ts" path="/Users/gourabchattopadhyay/Code/learnings/stashaway/src/types/allocation.types.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="2" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

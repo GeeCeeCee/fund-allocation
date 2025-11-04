@@ -19,7 +19,8 @@
     "strictFunctionTypes": true,
     "exactOptionalPropertyTypes": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["jest", "node"]
   },
   "exclude": ["node_modules"]
 }
